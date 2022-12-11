@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="contact" format="json">
+      <types:shape format="weave" example="examples/new 20.json"><![CDATA[%dw 2.0
+
+type contact = {|
+  id: String, 
+  Phone: Number {"typeId": "double"}, 
+  Email: String
+|} {"example": "{\\\"id\\\":\\\"1234ancd123\\\",\\\"Phone\\\":7780621555,\\\"Email\\\":\\\"vinaykumartheetla\\\"}"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="contacts" format="json">
+      <types:shape format="weave" example="examples/sfdc.json"><![CDATA[%dw 2.0
+
+type contacts = Array<{|  FirstName: String,   LastName: String,   Phone: Number {"typeId": "double"},   Email: String|}> {"example": "[{\\\"FirstName\\\":\\\"vinay\\\",\\\"LastName\\\":\\\"kumar\\\",\\\"Phone\\\":7780621555,\\\"Email\\\":\\\"vinaykumartheetla@gmail.com\\\"}]"}
+
+]]></types:shape>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#c5d79195-5320-4e6f-bba3-8cf261d3f9bf">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="contact"/>
+        </types:message>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#b91eef39-6b63-499f-8e54-5f01b753ea10">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="contacts"/>
+        </types:message>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>
